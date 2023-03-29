@@ -3,7 +3,7 @@ services:
     apigateway:
         build: ./api_gateway
         container_name: "api-gateway-container"
-        image: apigatewayimage
+        image: asimsinanyuksel/apigatewayimage:latest
         ports:
             - 3007:3000
         networks:
@@ -15,7 +15,7 @@ services:
         command: npm start
     urunlerapi:
         build: ./urunler_api
-        image: urunlerimage
+        image: asimsinanyuksel/urunlerimage:latest
         container_name: "urunler-api-container"
         ports:
             - 3005:3000
@@ -27,7 +27,7 @@ services:
         command: npm start
     siparislerapi:
         build: ./siparisler_api
-        image: siparislerimage
+        image: asimsinanyuksel/siparislerimage:latest
         container_name: "siparisler-api-container"
         ports:
             - 3006:3000
@@ -40,7 +40,7 @@ services:
     mysqldb:
       container_name: "mysqldb-container"
       platform: linux/amd64
-      image: mysql:5.7.31
+      image: mysql:5.7.31:latest
       command: --default-authentication-plugin=mysql_native_password --sql_mode=NO_ENGINE_SUBSTITUTION,NO_AUTO_CREATE_USER --explicit_defaults_for_timestamp
       restart: always
       ports:
