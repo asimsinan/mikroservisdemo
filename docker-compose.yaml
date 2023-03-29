@@ -1,0 +1,68 @@
+version: '1.0'
+services:
+    apigateway:
+        build: ./api_gateway
+        container_name: "api-gateway-container"
+        image: apigatewayimage
+        ports:
+            - 3007:3000
+        networks:
+           - benimagim
+        restart: always
+        depends_on:
+            - urunlerapi
+            - siparislerapi  
+        command: npm start
+    urunlerapi:
+        build: ./urunler_api
+        image: urunlerimage
+        container_name: "urunler-api-container"
+        ports:
+            - 3005:3000
+        networks:
+           - benimagim
+        restart: always
+        depends_on:
+            - mongo        
+        command: npm start
+    siparislerapi:
+        build: ./siparisler_api
+        image: siparislerimage
+        container_name: "siparisler-api-container"
+        ports:
+            - 3006:3000
+        networks:
+           - benimagim
+        restart: always
+        depends_on:
+            - mysqldb       
+        command: npm start
+    mysqldb:
+      container_name: "mysqldb-container"
+      platform: linux/amd64
+      image: mysql:5.7.31
+      command: --default-authentication-plugin=mysql_native_password --sql_mode=NO_ENGINE_SUBSTITUTION,NO_AUTO_CREATE_USER --explicit_defaults_for_timestamp
+      restart: always
+      ports:
+        - "3310:3306"
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+      networks:
+        - benimagim  
+    mongo:
+        image: mongo:latest
+        container_name: "mongodb_container"
+        networks:
+          - benimagim
+        restart: always
+        environment:
+          - MONGO_DATA_DIR=/data/db
+        volumes:
+          - ./data/db:/data/db
+        ports:
+            - 27017:27017
+networks:
+  benimagim:
+    driver: bridge
+    ipam:
+      driver: default
