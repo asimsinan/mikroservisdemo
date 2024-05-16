@@ -12,12 +12,14 @@ const {
 const urunlerAyarlar = {
   target: URUNLER_API_URL,
   changeOrigin: true, 
+  secure: true,
   logger: console
 };
 
 const siparislerAyarlar = {
   target: SIPARISLER_API_URL,
   changeOrigin: true, 
+  secure: true,
   logger: console
 };
 
